@@ -1,25 +1,20 @@
-/* Copyright (c) 2012-2015 The TagSpaces Authors. All rights reserved.
- * Use of this source code is governed by a AGPL3 license that
- * can be found in the LICENSE file. */
+/* Copyright (c) 2013-2016 The TagSpaces Authors.
+ * Use of this source code is governed by the MIT license which can be found in the LICENSE.txt file. */
 
 define(function(require, exports, module) {
   "use strict";
 
   console.log("Loading viewerURL");
 
-  exports.id = "viewerURL"; // ID should be equal to the directory name where the ext. is located
-  exports.title = "URL Viewer";
-  exports.type = "editor";
-  exports.supportedFileTypes = ["url", "website", "desktop"];
+  var extensionID = "viewerURL"; // ID should be equal to the directory name where the ext. is located
+  var extensionSupportedFileTypes = ["url", "website", "desktop"];
 
   var TSCORE = require("tscore");
-
   var containerElID;
   var currentFilePath;
+  var extensionDirectory = TSCORE.Config.getExtensionPath() + "/" + extensionID;
 
-  var extensionDirectory = TSCORE.Config.getExtensionPath() + "/" + exports.id;
-
-  exports.init = function(filePath, containerElementID) {
+  function init(filePath, containerElementID) {
     console.log("Initalization MD Viewer...");
     containerElID = containerElementID;
     $('#' + containerElID).attr("style", "background-color: white;");
@@ -36,15 +31,14 @@ define(function(require, exports, module) {
     });
   };
 
-  exports.setFileType = function() {
+  function setFileType() {
+
     console.log("setFileType not supported on this extension");
   };
 
-  exports.viewerMode = function(isViewerMode) {
-    // set readonly
-  };
+  function viewerMode(isViewerMode) {};
 
-  exports.setContent = function(content) {
+  function setContent(content) {
     var urlBegin = "URL=";
 
     var url = content.substring(content.indexOf(urlBegin) + urlBegin.length, content.length);
@@ -78,6 +72,12 @@ define(function(require, exports, module) {
     }
   };
 
-  exports.getContent = function() {};
+  function getContent() {};
+
+  exports.init = init;
+  exports.getContent = getContent;
+  exports.setContent = setContent;
+  exports.viewerMode = viewerMode;
+  exports.setFileType = setFileType;
 
 });
