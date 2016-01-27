@@ -4,10 +4,10 @@
 define(function(require, exports, module) {
   "use strict";
 
-  console.log("Loading viewerURL");
-
   var extensionID = "viewerURL"; // ID should be equal to the directory name where the ext. is located
   var extensionSupportedFileTypes = ["url", "website", "desktop"];
+
+  console.log("Loading " + extensionID);
 
   var TSCORE = require("tscore");
   var containerElID;
@@ -29,14 +29,14 @@ define(function(require, exports, module) {
         console.error("Loading file " + filePath + " failed " + error);
       });
     });
-  };
+  }
 
   function setFileType() {
 
     console.log("setFileType not supported on this extension");
-  };
+  }
 
-  function viewerMode(isViewerMode) {};
+  function viewerMode(isViewerMode) {}
 
   function setContent(content) {
     var urlBegin = "URL=";
@@ -70,9 +70,9 @@ define(function(require, exports, module) {
       TSCORE.showAlertDialog("No URL found in this file.");
       console.log("No URL found!");
     }
-  };
+  }
 
-  function getContent() {};
+  function getContent() {}
 
   exports.init = init;
   exports.getContent = getContent;
