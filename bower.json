@@ -1,7 +1,7 @@
 {
   "name": "Link Opener",
   "id": "viewerURL",
-  "description": "A TagSpaces extension allowing .",
+  "description": "A TagSpaces extension allowing you to open url files",
   "type": "viewer",
   "version": "1.0.0",
   "dependencies": {
