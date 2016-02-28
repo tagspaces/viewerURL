@@ -28,7 +28,7 @@ If you want to extend this extensions, please follow our general [extension deve
 
 ## Screenshots
 
-![Screenshot of the viewerURL](http://tagspaces.org/extensions/editorHTML/viewerURL-screenshot.png)
+![Screenshot of the viewerURL](http://tagspaces.org/extensions/viewerURL/viewerURL-screenshot.png)
 
 ## License
 
