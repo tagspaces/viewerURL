@@ -63,7 +63,7 @@ define(function(require, exports, module) {
         .prepend("<i class='fa fa-external-link'></i>&nbsp;")
         .click(function(e) {
           e.preventDefault();
-          TSCORE.openLinkExternally($(this).attr("data-url"));
+          TSCORE.IO.openFile($(this).attr("data-url"));
         })
       );
     } else {
