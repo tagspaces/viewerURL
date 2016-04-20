@@ -68,51 +68,8 @@ $(document).ready(function() {
     currentStyleIndex = extSettings.styleIndex;
   }
 
-  var zoomSteps = ['zoomSmallest', 'zoomSmaller', 'zoomSmall', 'zoomDefault', 'zoomLarge', 'zoomLarger', 'zoomLargest'];
-  var currentZoomState = 3;
-  if (extSettings && extSettings.zoomState) {
-    currentZoomState = extSettings.zoomState;
-  }
-
   $htmlContent.removeClass();
-  $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + " " + zoomSteps[currentZoomState]);
-
-  $("#changeStyleButton").bind('click', function() {
-    currentStyleIndex = currentStyleIndex + 1;
-    if (currentStyleIndex >= styles.length) {
-      currentStyleIndex = 0;
-    }
-    $htmlContent.removeClass();
-    $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + " " + zoomSteps[currentZoomState]);
-    saveExtSettings();
-  });
-
-  $("#zoomInButton").bind('click', function() {
-    currentZoomState++;
-    if (currentZoomState >= zoomSteps.length) {
-      currentZoomState = 6;
-    }
-    $htmlContent.removeClass();
-    $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + " " + zoomSteps[currentZoomState]);
-    saveExtSettings();
-  });
-
-  $("#zoomOutButton").bind('click', function() {
-    currentZoomState--;
-    if (currentZoomState < 0) {
-      currentZoomState = 0;
-    }
-    $htmlContent.removeClass();
-    $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + " " + zoomSteps[currentZoomState]);
-    saveExtSettings();
-  });
-
-  $("#zoomResetButton").bind('click', function() {
-    currentZoomState = 3;
-    $htmlContent.removeClass();
-    $htmlContent.addClass('markdown ' + styles[currentStyleIndex] + " " + zoomSteps[currentZoomState]);
-    saveExtSettings();
-  });
+  $htmlContent.addClass('markdown ' + styles[currentStyleIndex]);
 
   $("#printButton").on("click", function() {
     $(".dropdown-menu").dropdown('toggle');
@@ -132,14 +89,6 @@ $(document).ready(function() {
   }, function() {
     $('[data-i18n]').i18n();
   });
-
-  function saveExtSettings() {
-    var settings = {
-      "styleIndex": currentStyleIndex,
-      "zoomState":  currentZoomState
-    };
-    localStorage.setItem('viewerURLSettings', JSON.stringify(settings));
-  }
 
   function loadExtSettings() {
     extSettings = JSON.parse(localStorage.getItem("viewerURLSettings"));

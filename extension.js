@@ -10,7 +10,7 @@ define(function (require, exports, module) {
     console.log("Loading " + extensionID);
 
     var TSCORE = require("tscore");
-    var containerElID, url2htmlConverter, $containerElement, currentFilePath;
+    var containerElID, $containerElement, currentFilePath;
     var extensionDirectory = TSCORE.Config.getExtensionPath() + "/" + extensionID;
 
     function init(filePath, containerElementID) {
@@ -49,6 +49,8 @@ define(function (require, exports, module) {
 
     function setContent(content) {
         var urlBegin = "URL=";
+        var $htmlContent = $('#htmlContent');
+        $htmlContent.append(content);
 
         var url = content.substring(content.indexOf(urlBegin) + urlBegin.length, content.length);
 
@@ -65,8 +67,12 @@ define(function (require, exports, module) {
 
         console.log("URL: " + url);
 
+        var targetIframe = $($containerElement).attr('id');
+        console.log("TARGET IFRAME : "  + targetIframe);
+
+
         if (urlRegExp.test(url)) {
-            $('#' + containerElID).append($("<button>", {
+            $(targetIframe).append($("<button>", {
                     "class": "viewerURLButton btn btn-primary flexMaxWidth",
                     "style": "height: 40px;",
                     "title": "Opens the URL in the default browser",
