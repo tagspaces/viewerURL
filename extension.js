@@ -28,23 +28,6 @@ define(function (require, exports, module) {
             //"nwfaketop": "",
             "src": extensionDirectory + "/index.html?&locale=" + TSCORE.currentLanguage,
         }));
-        require([
-            extensionDirectory + '/libs/marked/lib/marked.js',
-        ], function (marked) {
-            url2htmlConverter = marked;
-            url2htmlConverter.setOptions({
-                renderer: new marked.Renderer(),
-                //highlight: function (code) {
-                //    //return require([extensionDirectory+'/highlightjs/highlight.js']).highlightAuto(code).value;
-                //},
-                gfm: true,
-                tables: true,
-                breaks: false,
-                pedantic: false,
-                smartLists: true,
-                smartypants: false
-            });
-        });
 
         TSCORE.IO.loadTextFilePromise(filePath).then(function (content) {
                 exports.setContent(content);
@@ -69,7 +52,7 @@ define(function (require, exports, module) {
 
         var url = content.substring(content.indexOf(urlBegin) + urlBegin.length, content.length);
 
-        console.log("PARSE URL CONTENT :" + url);
+        console.log("URL CONTENT :" + url);
 
         // preventing the case the url is at the end of the file
         // url = url + "\n";
