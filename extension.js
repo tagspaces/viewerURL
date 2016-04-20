@@ -25,7 +25,6 @@ define(function (require, exports, module) {
             "sandbox": "allow-same-origin allow-scripts allow-modals",
             "id": "iframeViewer",
             "nwdisable": "",
-            //"nwfaketop": "",
             "src": extensionDirectory + "/index.html?&locale=" + TSCORE.currentLanguage,
         }));
 
@@ -40,58 +39,50 @@ define(function (require, exports, module) {
     }
 
     function setFileType() {
-
-        console.log("setFileType not supported on this extension");
+      // TODO
+      console.log("setFileType not supported on this extension");
     }
 
     function viewerMode(isViewerMode) {
+      // TODO
+      console.log("viewerMode not supported on this extension");
     }
 
     function setContent(content) {
-        var urlBegin = "URL=";
-        var $htmlContent = $('#htmlContent');
-        $htmlContent.append(content);
+      var urlBegin = "URL=";
+      var url = content.substring(content.indexOf(urlBegin) + urlBegin.length, content.length);
+      console.log("URL CONTENT :" + url);
 
-        var url = content.substring(content.indexOf(urlBegin) + urlBegin.length, content.length);
+      // preventing the case the url is at the end of the file
+      // url = url + "\n";
+      // url = url.substring(0, url.indexOf("\n"));
+      //console.log("URL substring : " + url );
 
-        console.log("URL CONTENT :" + url);
+      var fileDirectory = TSCORE.TagUtils.extractContainingDirectoryPath(currentFilePath);
+      if (isWeb) {
+        fileDirectory = TSCORE.TagUtils.extractContainingDirectoryPath(location.href) + "/" + fileDirectory;
+      }
 
-        // preventing the case the url is at the end of the file
-        // url = url + "\n";
+      var urlRegExp = /https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w/_\.]*(\?\S+)?)?)?/;
 
-        // url = url.substring(0, url.indexOf("\n"));
-
-        //console.log("URL substring : " + url );
-
-        var urlRegExp = /https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w/_\.]*(\?\S+)?)?)?/;
-
-        console.log("URL: " + url);
-
-        var targetIframe = $($containerElement).attr('id');
-        console.log("TARGET IFRAME : "  + targetIframe);
-
-
-        if (urlRegExp.test(url)) {
-            $(targetIframe).append($("<button>", {
-                    "class": "viewerURLButton btn btn-primary flexMaxWidth",
-                    "style": "height: 40px;",
-                    "title": "Opens the URL in the default browser",
-                    "data-url": url,
-                    "text": url
-                })
-                .prepend("<i class='fa fa-external-link'></i>&nbsp;")
-                .click(function (e) {
-                    e.preventDefault();
-                    TSCORE.IO.openFile($(this).attr("data-url"));
-                })
-            );
+      if (urlRegExp.test(url)) {
+        var contentWindow = document.getElementById("iframeViewer").contentWindow;
+        if (typeof contentWindow.setContent === "function") {
+          contentWindow.setContent(url, fileDirectory);
         } else {
-            TSCORE.showAlertDialog("No URL found in this file.");
-            console.log("No URL found!");
+          // TODO optimize setTimeout
+          window.setTimeout(function() {
+            contentWindow.setContent(url, fileDirectory);
+          }, 500);
         }
+      } else {
+        TSCORE.showAlertDialog("No URL found in this file.");
+      }
     }
 
     function getContent() {
+      // TODO
+      console.log("getContent not supported on this extension");
     }
 
     exports.init = init;

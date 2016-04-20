@@ -62,14 +62,6 @@ $(document).ready(function() {
 
   var $htmlContent = $("#htmlContent");
 
-  var styles = ['', 'solarized-dark', 'github', 'metro-vibes', 'clearness', 'clearness-dark'];
-  var currentStyleIndex = 0;
-  if (extSettings && extSettings.styleIndex) {
-    currentStyleIndex = extSettings.styleIndex;
-  }
-
-  $htmlContent.removeClass();
-  $htmlContent.addClass('markdown ' + styles[currentStyleIndex]);
 
   $("#printButton").on("click", function() {
     $(".dropdown-menu").dropdown('toggle');
@@ -98,32 +90,36 @@ $(document).ready(function() {
 
 function setContent(content, fileDirectory) {
   var $htmlContent = $('#htmlContent');
-  $htmlContent.append(content);
   console.log('SHOW URL CONTENT : ' + content);
-
-  $("base").attr("href", fileDirectory + "//");
 
   if (fileDirectory.indexOf("file://") === 0) {
     fileDirectory = fileDirectory.substring(("file://").length, fileDirectory.length);
   }
 
+  $htmlContent.append($("<a>", {
+        "class": "viewerURLButton btn btn-primary flexMaxWidth",
+        "style": "height: 40px;",
+        "title": "Opens the URL in the default browser",
+        "data-url": content,
+        "text": content
+    })
+    .prepend("<i class='fa fa-external-link'></i>&nbsp;")
+    .click(function (e) {
+      e.preventDefault();
+      var msg = {command: "openLinkExternally", link : $(this).data("url")};
+      window.parent.postMessage(JSON.stringify(msg), "*");
+    })
+  );
+
+  /*
   var hasURLProtocol = function(url) {
     return (
-        url.indexOf("http://") === 0 ||
-        url.indexOf("https://") === 0 ||
-        url.indexOf("file://") === 0 ||
-        url.indexOf("data:") === 0
+      url.indexOf("http://") === 0 ||
+      url.indexOf("https://") === 0 ||
+      url.indexOf("file://") === 0 ||
+      url.indexOf("data:") === 0
     );
   };
-
-  // fixing embedding of local images
-  $htmlContent.find("img[src]").each(function() {
-    var currentSrc = $(this).attr("src");
-    if (!hasURLProtocol(currentSrc)) {
-      var path = (isWeb ? "" : "file://") + fileDirectory + "/" + currentSrc;
-      $(this).attr("src", path);
-    }
-  });
 
   $htmlContent.find("a[href]").each(function() {
     var currentSrc = $(this).attr("href");
@@ -142,6 +138,5 @@ function setContent(content, fileDirectory) {
       var msg = {command: "openLinkExternally", link : currentSrc};
       window.parent.postMessage(JSON.stringify(msg), "*");
     });
-  });
-
+  }); */
 }
