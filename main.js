@@ -90,18 +90,32 @@ $(document).ready(function() {
 
 function setContent(content, fileDirectory) {
   var $htmlContent = $('#htmlContent');
-  console.log('SHOW URL CONTENT : ' + content);
 
   if (fileDirectory.indexOf("file://") === 0) {
     fileDirectory = fileDirectory.substring(("file://").length, fileDirectory.length);
   }
 
+  $htmlContent.append($("<input>", {
+        "class": "form-control",
+        "readonly": "readonly",
+        "style": "margin: 10px; height: 40px; width: 100%",
+        "title": "Opens the URL in the default browser",
+        "value": content
+    })
+    .prepend("<i class='fa fa-external-link'></i>&nbsp;")
+    .click(function (e) {
+      e.preventDefault();
+      var msg = {command: "openLinkExternally", link : $(this).data("url")};
+      window.parent.postMessage(JSON.stringify(msg), "*");
+    })
+  );
+
   $htmlContent.append($("<a>", {
-        "class": "viewerURLButton btn btn-primary flexMaxWidth",
+        "class": "viewerURLButton btn btn-primary",
         "style": "height: 40px;",
         "title": "Opens the URL in the default browser",
         "data-url": content,
-        "text": content
+        "text": "Open URL"
     })
     .prepend("<i class='fa fa-external-link'></i>&nbsp;")
     .click(function (e) {
