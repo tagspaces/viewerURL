@@ -10,10 +10,10 @@ var isWeb;
 
 $(document).ready(function() {
   function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    name = name.replace(/[\[]/ , "\\\[").replace(/[\]]/ , "\\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)") ,
+            results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g , " "));
   }
 
   var locale = getParameterByName("locale");
@@ -25,37 +25,35 @@ $(document).ready(function() {
   isWin = parent.isWin;
   isWeb = parent.isWeb;
 
-  $(document).on('drop dragend dragenter dragover', function(event) {
+  $(document).on('drop dragend dragenter dragover' , function(event) {
     event.preventDefault();
   });
 
-  $('#aboutExtensionModal').on('show.bs.modal', function() {
+  $('#aboutExtensionModal').on('show.bs.modal' , function() {
     $.ajax({
-          url: 'README.md',
-          type: 'GET'
-        })
-        .done(function(mdData) {
-          //console.log("DATA: " + mdData);
-          if (marked) {
-            var modalBody = $("#aboutExtensionModal .modal-body");
-            modalBody.html(marked(mdData, { sanitize: true }));
-            handleLinks(modalBody);
-          } else {
-            console.log("markdown to html transformer not found");
-          }
-        })
-        .fail(function(data) {
-          console.warn("Loading file failed " + data);
-        });
+      url: 'README.md' ,
+      type: 'GET'
+    }).done(function(mdData) {
+      //console.log("DATA: " + mdData);
+      if (marked) {
+        var modalBody = $("#aboutExtensionModal .modal-body");
+        modalBody.html(marked(mdData , {sanitize: true}));
+        handleLinks(modalBody);
+      } else {
+        console.log("markdown to html transformer not found");
+      }
+    }).fail(function(data) {
+      console.warn("Loading file failed " + data);
+    });
   });
 
   function handleLinks($element) {
     $element.find("a[href]").each(function() {
       var currentSrc = $(this).attr("href");
-      $(this).bind('click', function(e) {
+      $(this).bind('click' , function(e) {
         e.preventDefault();
-        var msg = {command: "openLinkExternally", link : currentSrc};
-        window.parent.postMessage(JSON.stringify(msg), "*");
+        var msg = {command: "openLinkExternally" , link: currentSrc};
+        window.parent.postMessage(JSON.stringify(msg) , "*");
       });
     });
   }
@@ -63,7 +61,7 @@ $(document).ready(function() {
   var $htmlContent = $("#htmlContent");
 
 
-  $("#printButton").on("click", function() {
+  $("#printButton").on("click" , function() {
     $(".dropdown-menu").dropdown('toggle');
     window.print();
   });
@@ -74,11 +72,11 @@ $(document).ready(function() {
 
   // Init internationalization
   $.i18n.init({
-    ns: {namespaces: ['ns.viewerURL']},
-    debug: true,
-    lng: locale,
+    ns: {namespaces: ['ns.viewerURL']} ,
+    debug: true ,
+    lng: locale ,
     fallbackLng: 'en_US'
-  }, function() {
+  } , function() {
     $('[data-i18n]').i18n();
   });
 
@@ -88,55 +86,23 @@ $(document).ready(function() {
 
 });
 
-function setContent(content, fileDirectory) {
+function setContent(content , fileDirectory) {
   var $htmlContent = $('#htmlContent');
-  console.log('SHOW URL CONTENT : ' + content);
 
   if (fileDirectory.indexOf("file://") === 0) {
-    fileDirectory = fileDirectory.substring(("file://").length, fileDirectory.length);
+    fileDirectory = fileDirectory.substring(("file://").length , fileDirectory.length);
   }
 
-  $htmlContent.append($("<a>", {
-        "class": "viewerURLButton btn btn-primary flexMaxWidth",
-        "style": "height: 40px;",
-        "title": "Opens the URL in the default browser",
-        "data-url": content,
-        "text": content
-    })
-    .prepend("<i class='fa fa-external-link'></i>&nbsp;")
-    .click(function (e) {
-      e.preventDefault();
-      var msg = {command: "openLinkExternally", link : $(this).data("url")};
-      window.parent.postMessage(JSON.stringify(msg), "*");
-    })
+  $htmlContent.append($("<a>" , {
+            "class": "viewerURLButton btn btn-primary flexMaxWidth" ,
+            "style": "height: 40px;" ,
+            "title": "Opens the URL in the default browser" ,
+            "data-url": content ,
+            "text": content
+          }).prepend("<i class='fa fa-external-link'></i>&nbsp;").click(function(e) {
+            e.preventDefault();
+            var msg = {command: "openLinkExternally" , link: $(this).data("url")};
+            window.parent.postMessage(JSON.stringify(msg) , "*");
+          })
   );
-
-  /*
-  var hasURLProtocol = function(url) {
-    return (
-      url.indexOf("http://") === 0 ||
-      url.indexOf("https://") === 0 ||
-      url.indexOf("file://") === 0 ||
-      url.indexOf("data:") === 0
-    );
-  };
-
-  $htmlContent.find("a[href]").each(function() {
-    var currentSrc = $(this).attr("href");
-    var path;
-
-    if (!hasURLProtocol(currentSrc)) {
-      var path = (isWeb ? "" : "file://") + fileDirectory + "/" + currentSrc;
-      $(this).attr("href", path);
-    }
-
-    $(this).bind('click', function(e) {
-      e.preventDefault();
-      if (path) {
-        currentSrc = encodeURIComponent(path);
-      }
-      var msg = {command: "openLinkExternally", link : currentSrc};
-      window.parent.postMessage(JSON.stringify(msg), "*");
-    });
-  }); */
 }
