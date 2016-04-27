@@ -101,7 +101,7 @@ function setContent(content , fileDirectory) {
       "value": content
     })
     .prepend("<i class='fa fa-external-link'></i>&nbsp;")
-    .click(function (e) {
+    .click(function(e) {
       e.preventDefault();
       var msg = {command: "openLinkExternally", link : $(this).data("url")};
       window.parent.postMessage(JSON.stringify(msg), "*");
@@ -116,7 +116,7 @@ function setContent(content , fileDirectory) {
       "text": "Open URL"
     })
     .prepend("<i class='fa fa-external-link'></i>&nbsp;")
-    .click(function (e) {
+    .click(function(e) {
       e.preventDefault();
       var msg = {command: "openLinkExternally", link : $(this).data("url")};
       window.parent.postMessage(JSON.stringify(msg), "*");
