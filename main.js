@@ -25,51 +25,6 @@ $(document).ready(function() {
   isWin = parent.isWin;
   isWeb = parent.isWeb;
 
-  $(document).on('drop dragend dragenter dragover' , function(event) {
-    event.preventDefault();
-  });
-
-  $('#aboutExtensionModal').on('show.bs.modal' , function() {
-    $.ajax({
-      url: 'README.md' ,
-      type: 'GET'
-    }).done(function(mdData) {
-      //console.log("DATA: " + mdData);
-      if (marked) {
-        var modalBody = $("#aboutExtensionModal .modal-body");
-        modalBody.html(marked(mdData , {sanitize: true}));
-        handleLinks(modalBody);
-      } else {
-        console.log("markdown to html transformer not found");
-      }
-    }).fail(function(data) {
-      console.warn("Loading file failed " + data);
-    });
-  });
-
-  function handleLinks($element) {
-    $element.find("a[href]").each(function() {
-      var currentSrc = $(this).attr("href");
-      $(this).bind('click' , function(e) {
-        e.preventDefault();
-        var msg = {command: "openLinkExternally" , link: currentSrc};
-        window.parent.postMessage(JSON.stringify(msg) , "*");
-      });
-    });
-  }
-
-  var $htmlContent = $("#htmlContent");
-
-
-  $("#printButton").on("click" , function() {
-    $(".dropdown-menu").dropdown('toggle');
-    window.print();
-  });
-
-  if (isCordova) {
-    $("#printButton").hide();
-  }
-
   // Init internationalization
   $.i18n.init({
     ns: {namespaces: ['ns.viewerURL']} ,
@@ -87,6 +42,7 @@ $(document).ready(function() {
 });
 
 function setContent(content , fileDirectory) {
+  console.log(content);
   var $htmlContent = $('#htmlContent');
 
   if (fileDirectory.indexOf("file://") === 0) {
