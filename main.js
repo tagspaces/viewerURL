@@ -42,7 +42,6 @@ $(document).ready(function() {
 });
 
 function setContent(content , fileDirectory) {
-  console.log(content);
   var $htmlContent = $('#htmlContent');
 
   if (fileDirectory.indexOf("file://") === 0) {

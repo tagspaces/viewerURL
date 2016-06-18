@@ -49,7 +49,6 @@ define(function(require , exports , module) {
   }
 
   function setContent(content) {
-    console.log(content);
     var urlBegin = "URL=";
     var url = content.substring(content.indexOf(urlBegin) + urlBegin.length , content.length);
 
