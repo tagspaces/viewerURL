@@ -65,7 +65,6 @@ function setContent(content , fileDirectory) {
 
   $htmlContent.append($("<a>", {
       "class": "viewerURLButton btn btn-primary",
-      "style": "height: 40px;",
       "title": "Opens the URL in the default browser",
       "data-url": content,
       "text": "Open URL"
