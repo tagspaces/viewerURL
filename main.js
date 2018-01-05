@@ -6,10 +6,11 @@
 
 var isCordova;
 var isWin;
-var loadContentExternally = true;
 var isWeb = (document.URL.startsWith('http') && !document.URL.startsWith('http://localhost:1212/'));
 
 $(document).ready(function() {
+  sendMessageToHost({command: 'loadDefaultTextContent'});
+
   function getParameterByName(name) {
     name = name.replace(/[\[]/ , "\\\[").replace(/[\]]/ , "\\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)") ,
@@ -39,7 +40,6 @@ $(document).ready(function() {
   function loadExtSettings() {
     extSettings = JSON.parse(localStorage.getItem("viewerURLSettings"));
   }
-
 });
 
 function setContent(content , fileDirectory) {
