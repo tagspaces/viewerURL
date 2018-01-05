@@ -59,8 +59,7 @@ function setContent(content , fileDirectory) {
     .prepend("<i class='fa fa-external-link'></i>&nbsp;")
     .click(function(e) {
       e.preventDefault();
-      var msg = {command: "openLinkExternally", link : $(this).data("url")};
-      window.parent.postMessage(JSON.stringify(msg), "*");
+      sendMessageToHost({command: 'openLinkExternally', link : $(this).data("url")});
     })
   );
 
@@ -73,8 +72,7 @@ function setContent(content , fileDirectory) {
     .prepend("<i class='fa fa-external-link'></i>&nbsp;")
     .click(function(e) {
       e.preventDefault();
-      var msg = {command: "openLinkExternally", link : $(this).data("url")};
-      window.parent.postMessage(JSON.stringify(msg), "*");
+      sendMessageToHost({command: 'openLinkExternally', link : $(this).data("url")});
     })
   );
 
