@@ -48,13 +48,15 @@ function setContent(content , fileDirectory) {
   if (fileDirectory.indexOf("file://") === 0) {
     fileDirectory = fileDirectory.substring(("file://").length , fileDirectory.length);
   }
+  var urlBegin = "URL=";
+  var url = content.substring(content.indexOf(urlBegin) + urlBegin.lengt, content.length);
 
   $htmlContent.append($("<input>", {
       "class": "form-control",
       "readonly": "readonly",
       "style": "margin: 10px; height: 40px; width: 100%",
       "title": "Opens the URL in the default browser",
-      "value": content
+      "value": url
     })
     .prepend("<i class='fa fa-external-link'></i>&nbsp;")
     .click(function(e) {
@@ -66,7 +68,7 @@ function setContent(content , fileDirectory) {
   $htmlContent.append($("<a>", {
       "class": "viewerURLButton btn btn-primary",
       "title": "Opens the URL in the default browser",
-      "data-url": content,
+      "data-url": url,
       "text": "Open URL"
     })
     .prepend("<i class='fa fa-external-link'></i>&nbsp;")
