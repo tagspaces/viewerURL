@@ -22,7 +22,7 @@ function setContent(content) {
     content.length
   );
 
-  let dataURL = content.substring(
+  let dataImage = content.substring(
     content.indexOf(dataImageURL) + dataImageURL.length,
     content.length
   );
@@ -56,13 +56,15 @@ function setContent(content) {
           link: e.target.dataset.url
         });
       })
-  ).append(
-    $('<img>', {
-      style: 'margin: 15px; height: 100%; width: 95%',
-      title: 'Image URL',
-      src: dataURL
-    })
   );
-
-
+  
+  if (!dataImage.indexOf('data:image')) {
+    $htmlContent.append(
+      $('<img>', {
+        style: 'margin: 15px; height: 100%; width: 95%',
+        title: 'Image URL',
+        src: dataImage
+      })
+    );
+  }
 }
