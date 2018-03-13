@@ -15,8 +15,15 @@ $(document).ready(() => {
 function setContent(content) {
   const $htmlContent = $('#htmlContent');
   const urlBegin = 'URL=';
+  const dataImageURL = 'COMMENT=';
   let url = content.substring(
     content.indexOf(urlBegin) + urlBegin.length,
+    // content.indexOf(dataImageURL) + dataImageURL.length,
+    content.length
+  );
+
+  let dataURL = content.substring(
+    content.indexOf(dataImageURL) + dataImageURL.length,
     content.length
   );
 
@@ -49,5 +56,13 @@ function setContent(content) {
           link: e.target.dataset.url
         });
       })
+  ).append(
+    $('<img>', {
+      style: 'margin: 15px; height: 100%; width: 95%',
+      title: 'Image URL',
+      src: dataURL
+    })
   );
+
+
 }
