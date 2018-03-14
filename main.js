@@ -15,15 +15,14 @@ $(document).ready(() => {
 function setContent(content) {
   const $htmlContent = $('#htmlContent');
   const urlBegin = 'URL=';
-  const dataImageURL = 'COMMENT=';
+  const commentTag = 'COMMENT=';
   let url = content.substring(
     content.indexOf(urlBegin) + urlBegin.length,
-    // content.indexOf(dataImageURL) + dataImageURL.length,
     content.length
   );
 
-  let dataImage = content.substring(
-    content.indexOf(dataImageURL) + dataImageURL.length,
+  let comment = content.substring(
+    content.indexOf(commentTag) + commentTag.length,
     content.length
   );
 
@@ -57,13 +56,13 @@ function setContent(content) {
         });
       })
   );
-  
-  if (!dataImage.indexOf('data:image')) {
+
+  if (!comment.indexOf('data:image')) {
     $htmlContent.append(
       $('<img>', {
         style: 'margin: 15px; height: 100%; width: 95%',
         title: 'Image URL',
-        src: dataImage
+        src: comment
       })
     );
   }
