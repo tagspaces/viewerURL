@@ -1,5 +1,9 @@
 @import '../legacy-ext/common.css';
 
+body {
+  overflow-y: auto;
+}
+
 .viewerURLButton {
     margin: 10px;
 }
