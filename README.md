@@ -1,3 +1,5 @@
+This repository is archived. Please use https://github.com/tagspaces/tagspaces-extensions instead.
+
 # URL Viewer for TagSpaces
 
 A TagSpaces extension allowing you to open url files created from web-browsers or bookmark manangers
